@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block titulo %}Log in{% endblock %}
+{% block body %}
+	
+    <div class="container-fluid" >
+			<div>
+				<img src="https://i.pinimg.com/originals/60/f6/e7/60f6e7294309c3ec67855e35eb1912da.gif" alt="Purple Chat" width="46" id="lhama" align="left">
+      	<p class="purple">Purple Chat</p>
+			</div>
+     <br>
+    	<form action="{{url_for('logar')}}" method="post">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Nome de usuário</label>
+				<input name="nomeusuario" class="form-control" type="text" placeholder="Digite seu nome de usuário">
+				<small id="emailHelp" class="form-text text-muted">Você é responsável pelas mensagens que compartilha na Purple Chat</small>
+			</div>
+			
+			<div class="form-group">
+			    <label for="exampleFormControlSelect1">Escolha sua cor</label>
+			    <select class="form-control" id="exampleFormControlSelect1" name="cor">
+			      <option value="black">Preto</option>
+			      <option value="purple">Roxo</option>
+			      <option value="orange">Laranja</option>
+			      <option value="yellow">Amarelo</option>
+			      <option value="blue">Azul</option>
+			    </select>
+			 </div>
+			
+			<button type="submit" class="btn btn-primary">Entrar!</button>
+		</form>
+    	
+    </div>
+{% endblock %}

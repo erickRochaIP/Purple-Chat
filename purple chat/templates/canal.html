@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+{% block titulo %}{{canal.nome}}{% endblock %}
+{% block script %}
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+
+	<script>
+		
+	 /* document.addEventListener('DOMContentLoaded', function() {
+	                  document.querySelector('#enviar').onclick = function() {
+	                      const name = document.querySelector('#textbox').value;
+	                      alert(`${name}!`);
+	                  };
+	              });*/
+
+	 document.addEventListener('DOMContentLoaded', () => {
+
+	      // Connect to websocket
+	      var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+	      // When connected, configure buttons
+	      socket.on('connect', () => {
+
+	          // Each button should emit a "submit vote" event
+	          document.querySelector('#enviar').onclick = () => {
+	              //button.onclick = () => {
+	                  const selection = document.querySelector('#textbox').value;
+	                  document.querySelector('#textbox').value = "";
+	                  if (selection.length != 0 && selection.trim()){
+		                  const nomeusuario = document.querySelector('#nomeusuario').innerHTML;
+		                  const cor = document.querySelector('#nomeusuario').style.color;
+		                  const canal = document.querySelector('#canal').innerHTML; 
+		                  console.log(selection)
+		                  socket.emit('enviar mensagem', {'selection': selection, 'nomeusuario': nomeusuario, 'cor': cor, 'canal': canal});
+	              	  }
+	              //};
+	          };
+	      });
+
+	      // When a new vote is announced, add to the unordered list
+	    socket.on('announce mensagem', data => {
+	      	const canal = document.querySelector('#canal').innerHTML; 
+	      	if (canal === `${data.canal}`) {
+		      	const div = document.createElement('div');
+		      	const h6 = document.createElement('h6');
+		      	const span =  document.createElement('span');
+		      	const p =  document.createElement('p');
+		      	span.className = 'badge badge-secondary badge-pill';
+		      	span.style.margin = '2px';
+		      	span.innerHTML = `${data.dataHora}`;
+		      	h6.style.color = `${data.cor}`;
+		      	h6.innerHTML = `${data.nomeusuario}`;
+		      	p.innerHTML = `${data.selection}`;
+		      	h6.append(span);
+		      	div.append(h6);
+		      	div.append(p);
+
+		        document.querySelector('#mensagem').append(div);
+		        document.getElementById('mensagem').scrollTop = p.offsetHeight + p.offsetTop;
+	        }
+	      });
+	  });
+
+	</script>
+
+{% endblock %}
+{% block body %}
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<img src="https://i.pinimg.com/originals/60/f6/e7/60f6e7294309c3ec67855e35eb1912da.gif" alt="Purple Chat" width="46">
+	<p class="purple">Purple Chat</p>
+      <a class="navbar-brand" href="{{url_for('indexar')}}">Home</a>
+      
+    {% if logado %}
+		<form action="{{url_for('logout')}}" method="post" ><button class="btn btn-warning botao">Log out</button></form>
+		<form action="{{url_for('criarCanal')}}" method="post" ><button class="btn btn-info botao">Criar Canal</button></form>
+	{% else %}
+		<form action="{{url_for('login')}}" method="post" ><button class="btn btn-warning botao">Logar</button></form>
+		<form action="{{url_for('login')}}" method="post" ><button class="btn btn-info botao">Criar Canal</button></form>
+	{% endif %}
+    </nav>
+
+<h2 id="canal">{{ canal.nome }}</h2>
+<h5 id="nomeusuario" style="color: {{ cor }}">{{ nomeusuario }}</h5>
+<div class="border" id="mensagem" style="overflow-y: scroll; height: 300px">
+
+	{% for mensagem in canal.mensagens %}
+	<div >
+		<h6 style="color: {{ mensagem.cor }}"> {{ mensagem.nome }}<span class="badge badge-secondary badge-pill" style="margin: 2px">{{ mensagem.dataHora }}</span></h6>		
+		<p>{{ mensagem.texto }}</p>
+	</div>
+
+{% endfor %}
+</div>
+
+<div class="input-group mb-3">
+  <textarea class="form-control" rows="1" id="textbox" placeholder="Digite sua mensagem"></textarea>
+  <div class="input-group-append">
+    <button class="btn btn-outline-primary" type="button" id="enviar">
+    	<svg class="bi bi-chevron-double-right" width="1em" height="1em" viewBox="0 0 16 16" fill="purple" xmlns="http://www.w3.org/2000/svg">
+		  <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+		  <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+		</svg>
+	</button>
+  </div>
+</div>
+
+{% endblock %}

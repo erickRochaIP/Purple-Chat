@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block titulo %}{% endblock %}</title>
+        <link rel="icon" type="imagem/gif" href="https://i.pinimg.com/originals/60/f6/e7/60f6e7294309c3ec67855e35eb1912da.gif" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <style>
+        	#conteudo{
+        		margin: 50px;
+        		padding: 30px;
+        		background-color: white;
+                        height: 550px;
+                        width: 600px;
+                        align-self: center;
+        	}
+        	
+        	body{
+        		background-image: linear-gradient(to right, #9933ff, #3399ff);
+        	}
+        	.nome{
+        		color: {{ cor }};
+        	}
+                #externa {
+                        align-items: center;
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                }
+
+                .botao {
+                        margin-right: 10px;
+                }
+
+                #lhama{
+                        margin-bottom: 20px;
+                }
+
+                .purple{
+                        color: #9933ff;
+                        font-family: OCR A Std, monospace;
+                        font-size:25px;
+                        margin: 5px;
+                }
+        	
+                
+
+        </style>
+
+        {% block script %}
+        {% endblock %}
+                
+</head>
+<body>
+        <div id="externa">
+                <div id="conteudo" class="border border-secondary">
+
+                        {% block body %}
+                        {% endblock %}
+                </div>
+        </div>
+		
+</body>
+</html>

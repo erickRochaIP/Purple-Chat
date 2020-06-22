@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block titulo %}Canal Privado{% endblock %}
+{% block body %}
+	<div class="container-fluid" >
+	<div>
+				<img src="https://i.pinimg.com/originals/60/f6/e7/60f6e7294309c3ec67855e35eb1912da.gif" alt="Purple Chat" width="46" id="lhama" align="left">
+		<p class="purple">Purple Chat</p>
+			</div>
+	 <br>
+		<form action="{{url_for('conferirSenha')}}" method="post">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Senha</label>
+				<input name="senha" class="form-control" type="text" placeholder="Digite a senha do Canal">
+				<small id="emailHelp" class="form-text text-muted">Esse é um canal privado! Informe a senha para poder entrar</small>
+			</div>
+			<select name="nome">
+				<option class="dropdown-item" value="{{ canal.nome }}">{{ canal.nome }}</option>
+			</select>
+			
+			<button type="submit" class="btn btn-primary">Entrar no Canal!</button>
+		</form>
+		
+	</div>
+{% endblock %}

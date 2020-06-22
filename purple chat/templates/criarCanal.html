@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block titulo %}Criação de Canal{% endblock %}
+{% block body %}
+<div class="container-fluid" >
+	<div>
+				<img src="https://i.pinimg.com/originals/60/f6/e7/60f6e7294309c3ec67855e35eb1912da.gif" alt="Purple Chat" width="46" id="lhama" align="left">
+      	<p class="purple">Purple Chat</p>
+			</div>
+     <br>
+
+    	<form action="{{url_for('postarCanal')}}" method="post">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Nome do canal</label>
+				<input name="nomecanal" class="form-control" type="text" placeholder="Digite o nome do Canal">
+			</div>
+
+			<div class="form-group">
+				<label for="exampleInputEmail1">Senha</label>
+				<input name="senha" class="form-control" type="text" placeholder="Digite a senha do Canal">
+				<small id="emailHelp" class="form-text text-muted">Se você preencher esse campo o canal será privado</small>
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Criar Canal!</button>
+		</form>
+    	
+    </div>
+{% endblock %}
